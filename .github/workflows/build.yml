@@ -48,5 +48,5 @@ jobs:
           source-directory: 'output'
           destination-github-username: 'DeepPhe'
           destination-repository-name: 'DeepPhe-Dist'
-          user-email: bot@bot.org
+          user-email: john.d.levander@gmail.com
           target-branch: main
