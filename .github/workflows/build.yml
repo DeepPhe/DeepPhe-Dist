@@ -34,80 +34,19 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: |
-          ls -la
-          cd dphe-onto-db
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-neo4j
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-neo4j-plugin
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-core
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-stream
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-cli
-          mvn --batch-mode clean install -U -DskipTests
-          
-      - uses: vimtor/action-zip@v1
-        with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/bin/ 
-          dest: DeepPhe-bin.zip
-          recursive: false
-
-      - uses: vimtor/action-zip@v1   
-        with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/lib/ 
-          dest: DeepPhe-lib.zip
-          recursive: false
-          
-      - uses: vimtor/action-zip@v1   
-        with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/resources/ 
-          dest: DeepPhe-resources.zip
-          recursive: false
+          mkdir zips
+          cd zips
+          echo "hi" > text.txt
         
-      - uses: vimtor/action-zip@v1   
+     
+          
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          files: dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
-          dest: DeepPhe-neo4j.zip
-          recursive: false
-
-      - uses: actions/upload-artifact@v1
-        with:
-          name: DeepPhe-lib.zip
-          path: DeepPhe-lib.zip
-          
-      - uses: actions/upload-artifact@v1
-        with:
-          name: DeepPhe-bin.zip
-          path: DeepPhe-bin.zip
-          
-      - uses: actions/upload-artifact@v1
-        with:
-          name: DeepPhe-resources.zip
-          path: DeepPhe-resources.zip
-          
-          
-      - uses: actions/upload-artifact@v1
-        with:
-          name: DeepPhe-neo4j.zip
-          path: DeepPhe-neo4j.zip
-          
-          
-      - uses: actions/checkout@v2
-      
-      - name: Push ZIP file
-        run: |
-          ls -la
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "deepphe+github-actions[bot]@users.noreply.github.com"
-
-          git add DeepPhe-neo4j.zip
-          git commit -m "Adding new CLI Distribution"
-          git push
-         
+          source-directory: 'output'
+          destination-github-username: 'DeepPhe'
+          destination-repository-name: 'DeepPhe-Dist'
+          user-email: bot@bot.org
+          target-branch: main
