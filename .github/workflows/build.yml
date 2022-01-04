@@ -35,5 +35,5 @@ jobs:
       - name: Build with Maven
         run: |
           ls -la
-          cd DeepPhe-Release/dphe-onto-db
+          cd dphe-onto-db
           mvn --batch-mode clean install -U -DskipTests
