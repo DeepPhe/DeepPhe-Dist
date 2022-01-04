@@ -57,13 +57,16 @@ jobs:
         with:
           files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/bin dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/lib dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/resources dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
           dest: DeepPhe-Cli.zip
+          recursive: true
           
       - uses: actions/upload-artifact@v1
         with:
           name: DeepPhe-Release
           path: ${{ github.workspace }}/DeepPhe-Cli.zip
           
-      - name: Push zip file
+      - uses: actions/checkout@v2
+      
+      - name: Push ZIP file
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "deepphe+github-actions[bot]@users.noreply.github.com"
