@@ -53,7 +53,7 @@ jobs:
           cd dphe-cli
           mvn --batch-mode clean install -U -DskipTests
           
-      - uses: papeloto/action-zip@v1
+      - uses: vimtor/action-zip@v1
         with:
           files: dphe-cli/target 
           dest: DeepPhe-Cli.zip
