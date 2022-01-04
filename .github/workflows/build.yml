@@ -37,3 +37,19 @@ jobs:
           ls -la
           cd dphe-onto-db
           mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-neo4j
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-neo4j-plugin
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-core
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-stream
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-cli
+          mvn --batch-mode clean install -U -DskipTests
+         
