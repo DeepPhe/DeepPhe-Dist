@@ -45,7 +45,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: 'output'
+          source-directory: 'zips'
           destination-github-username: 'DeepPhe'
           destination-repository-name: 'DeepPhe-Dist'
           user-email: john.d.levander@gmail.com
