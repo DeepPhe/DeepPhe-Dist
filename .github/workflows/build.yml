@@ -55,14 +55,14 @@ jobs:
           
       - uses: vimtor/action-zip@v1
         with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/bin/ dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/lib/ dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/resources/ dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
+          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0 dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
           dest: DeepPhe-Cli.zip
           recursive: false
           
       - uses: actions/upload-artifact@v1
         with:
           name: DeepPhe-Cli
-          path: ${{ github.workspace }}/DeepPhe-Cli.zip
+          path: ${{ github.workspace }}
           
       - uses: actions/checkout@v2
       
@@ -72,7 +72,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "deepphe+github-actions[bot]@users.noreply.github.com"
 
-          git add ${{ github.workspace }}/DeepPhe-Cli/DeepPhe-Cli.zip
+          git add ${{ github.workspace }}/DeepPhe-Cli.zip
           git commit -m "Adding new CLI Distribution"
           git push
          
