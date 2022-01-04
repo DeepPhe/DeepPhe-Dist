@@ -55,14 +55,33 @@ jobs:
           
       - uses: vimtor/action-zip@v1
         with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0 dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
-          dest: DeepPhe-Cli.zip
+          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/bin/ 
+          dest: DeepPhe-bin.zip
+          recursive: false
+
+      - uses: vimtor/action-zip@v1   
+        with:
+          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/lib/ 
+          dest: DeepPhe-lib.zip
+          recursive: false
+          
+      - uses: vimtor/action-zip@v1   
+        with:
+          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/resources/ 
+          dest: DeepPhe-resources.zip
+          recursive: false
+        
+      - uses: vimtor/action-zip@v1   
+        with:
+          files: dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
+          dest: DeepPhe-neo4j.zip
           recursive: false
           
       - uses: actions/upload-artifact@v1
         with:
-          name: DeepPhe-Cli
-          path: ${{ github.workspace }}
+          name: artifact-name
+          path: DeepPhe-neo4j.zip
+          
           
       - uses: actions/checkout@v2
       
