@@ -76,10 +76,26 @@ jobs:
           files: dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
           dest: DeepPhe-neo4j.zip
           recursive: false
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: DeepPhe-lib.zip
+          path: DeepPhe-lib.zip
           
       - uses: actions/upload-artifact@v1
         with:
-          name: artifact-name
+          name: DeepPhe-bin.zip
+          path: DeepPhe-bin.zip
+          
+      - uses: actions/upload-artifact@v1
+        with:
+          name: DeepPhe-resources.zip
+          path: DeepPhe-resources.zip
+          
+          
+      - uses: actions/upload-artifact@v1
+        with:
+          name: DeepPhe-neo4j.zip
           path: DeepPhe-neo4j.zip
           
           
@@ -87,7 +103,7 @@ jobs:
       
       - name: Push ZIP file
         run: |
-          ls
+          ls -la
           git config --global user.name "github-actions[bot]"
           git config --global user.email "deepphe+github-actions[bot]@users.noreply.github.com"
 
