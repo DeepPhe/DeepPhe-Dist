@@ -64,25 +64,25 @@ jobs:
 
       - uses: vimtor/action-zip@v1
         with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/bin/ 
+          files: DeepPhe/dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/bin/ 
           dest: zips/DeepPhe-bin.zip
           recursive: false
 
       - uses: vimtor/action-zip@v1   
         with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/lib/ 
+          files: DeepPhe/dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/lib/ 
           dest: zips/DeepPhe-lib.zip
           recursive: false
           
       - uses: vimtor/action-zip@v1   
         with:
-          files: dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/resources/ 
+          files: DeepPhe/dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/resources/ 
           dest: zips/DeepPhe-resources.zip
           recursive: false
         
       - uses: vimtor/action-zip@v1   
         with:
-          files: dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
+          files: DeepPhe/dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
           dest: zips/DeepPhe-neo4j.zip
           recursive: false
 
