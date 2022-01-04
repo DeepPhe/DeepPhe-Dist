@@ -52,4 +52,14 @@ jobs:
           cd ..
           cd dphe-cli
           mvn --batch-mode clean install -U -DskipTests
+          
+      - uses: papeloto/action-zip@v1
+        with:
+          files: dphe-cli/target 
+          dest: DeepPhe-Cli.zip
+          
+      - uses: actions/upload-artifact@v1
+        with:
+          name: DeepPhe-Release
+          path: ${{ github.workspace }}/DeepPhe-Cli.zip
          
