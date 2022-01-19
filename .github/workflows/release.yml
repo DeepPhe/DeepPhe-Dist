@@ -88,7 +88,7 @@ jobs:
       
       - name: Get release
         id: get_release
-        uses: bruceadams/get-release@refs%2Fheads%2Fmain
+        uses: bruceadams/get-release@refs/heads/main
         env:
           GITHUB_TOKEN: ${{ github.token }}
           
