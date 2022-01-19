@@ -85,13 +85,6 @@ jobs:
           files: DeepPhe/dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
           dest: zips/DeepPhe-neo4j.zip
           recursive: true
-      
-      - name: Get release
-        id: get_release
-        uses: bruceadams/get-release@v1.2.3
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          
           
       - name: Upload Release Asset
         id: upload-resources
@@ -105,5 +98,40 @@ jobs:
           tag: 'refs/heads/main'
           overwrite: true
           
+      - name: Upload Release Asset
+        id: upload-lib
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: zips/DeepPhe-lib.zip
+          asset_name: DeepPhe-lib.zip
+          tag: 'refs/heads/main'
+          overwrite: true
+          
+      - name: Upload Release Asset
+        id: upload-bin
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: zips/DeepPhe-bin.zip
+          asset_name: DeepPhe-bin.zip
+          tag: 'refs/heads/main'
+          overwrite: true
+          
+      - name: Upload Release Asset
+        id: upload-neo4j
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: zips/DeepPhe-neo4j.zip
+          asset_name: DeepPhe-neo4j.zip
+          tag: 'refs/heads/main'
+          overwrite: true
 
      
