@@ -95,47 +95,15 @@ jobs:
           
       - name: Upload Release Asset
         id: upload-resources
-        uses: actions/upload-release-asset@v1
+        uses: svenstaro/upload-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: zips/DeepPhe-resources.zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: zips/DeepPhe-resources.zip
           asset_name: DeepPhe-resources.zip
-          asset_content_type: application/zip
-
-      - name: Upload Release Asset
-        id: upload-lib
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: zips/DeepPhe-lib.zip
-          asset_name: DeepPhe-lib.zip
-          asset_content_type: application/zip
+          tag: 'refs/heads/main'
+          overwrite: true
           
-      - name: Upload Release Asset
-        id: upload-bin
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: zips/DeepPhe-bin.zip
-          asset_name: DeepPhe-bin.zip
-          asset_content_type: application/zip
-          
-      - name: Upload Release Asset
-        id: upload-neo4j
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: zips/DeepPhe-neo4j.zip
-          asset_name: DeepPhe-neo4j.zip
-          asset_content_type: application/zip
-
 
      
