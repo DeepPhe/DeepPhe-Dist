@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: DeepPhe/DeepPhe-Release
-          ref: 'xn0.5.6'
+          ref: 'xn0.5.7'
           path: 'DeepPhe'
 
       - uses: actions/setup-java@v2
