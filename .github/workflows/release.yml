@@ -43,11 +43,21 @@ jobs:
   
       - uses: vimtor/action-zip@v1
         with:
-          files: scripts/osx
-          dest: scripts/DeepPhe-unix-scripts.zip 
+          files: scripts/DeepPhe-unix-scripts
+          dest: scripts/DeepPhe-unix-scripts.zip
+          
+      - uses: vimtor/action-zip@v1
+        with:
+          files: scripts/DeepPhe-win-scripts
+          dest: scripts/DeepPhe-win-scripts.zip
+         
+      - uses: vimtor/action-zip@v1
+        with:
+          files: scripts/DeepPhe-neoj4-conf
+          dest: scripts/DeepPhe-neoj4-conf.zip
  
       - name: Upload Release Asset
-        id: upload-lib
+        id: upload-unix-scripts
         uses: svenstaro/upload-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,3 +67,29 @@ jobs:
           asset_name: DeepPhe-unix-scripts.zip
           tag: 'refs/heads/main'
           overwrite: true
+          
+      - name: Upload Release Asset
+        id: upload-win-scripts
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: scripts/DeepPhe-win-scripts.zip
+          asset_name: DeepPhe-win-scripts.zip
+          tag: 'refs/heads/main'
+          overwrite: true
+
+
+      - name: Upload Release Asset
+        id: upload-neo4j-conf
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: scripts/DeepPhe-neo4j-conf.zip
+          asset_name: DeepPhe-neo4j-conf.zip
+          tag: 'refs/heads/main'
+          overwrite: true
+
