@@ -53,8 +53,8 @@ jobs:
          
       - uses: vimtor/action-zip@v1
         with:
-          files: scripts/DeepPhe-neoj4-conf
-          dest: scripts/DeepPhe-neoj4-conf.zip
+          files: scripts/DeepPhe-neo4j-conf
+          dest: scripts/DeepPhe-neo4j-conf.zip
  
       - name: Upload Release Asset
         id: upload-unix-scripts
