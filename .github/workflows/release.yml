@@ -1,7 +1,6 @@
  # This is a basic workflow to help you get started with Actions
 
-name: CI
-
+name: Create DeepPhe Release Zips
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
@@ -20,76 +19,118 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    
-      - name: Build with Maven
-        run: mkdir zips
-          
       - uses: actions/checkout@v2
 
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: DeepPhe/DeepPhe-startup-scripts
-          ref: 'main'
-          path: 'scripts'
+          repository: DeepPhe/DeepPhe-Release
+          ref: 'xn0.5.9'
+          path: 'DeepPhe'
 
       - uses: actions/setup-java@v2
         with:
           java-version: '8'
           distribution: 'adopt'
   
+
+
+      - name: Build with Maven
+        run: |
+          cd DeepPhe
+          ls -la
+          cd dphe-onto-db
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-neo4j
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-neo4j-plugin
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-core
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-stream
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-cli
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          mkdir zips
+
       - uses: vimtor/action-zip@v1
         with:
-          files: scripts/DeepPhe-unix-scripts
-          dest: scripts/DeepPhe-unix-scripts.zip
+          files: DeepPhe/dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/bin/ 
+          dest: zips/DeepPhe-bin.zip
+          recursive: true
+
+      - uses: vimtor/action-zip@v1   
+        with:
+          files: DeepPhe/dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/lib/ 
+          dest: zips/DeepPhe-lib.zip
+          recursive: true
           
-      - uses: vimtor/action-zip@v1
+      - uses: vimtor/action-zip@v1   
         with:
-          files: scripts/DeepPhe-win-scripts
-          dest: scripts/DeepPhe-win-scripts.zip
-         
-      - uses: vimtor/action-zip@v1
+          files: DeepPhe/dphe-cli/target/deepphe-0.4.0-bin/deepphe-0.4.0/resources/ 
+          dest: zips/DeepPhe-resources.zip
+          recursive: true
+        
+      - uses: vimtor/action-zip@v1   
         with:
-          files: scripts/DeepPhe-neo4j-conf
-          dest: scripts/DeepPhe-neo4j-conf.zip
- 
+          files: DeepPhe/dphe-neo4j-plugin/target/deepphe-neo4j-plugin-0.4.0.jar 
+          dest: zips/DeepPhe-neo4j.zip
+          recursive: true
+          
       - name: Upload Release Asset
-        id: upload-unix-scripts
+        id: upload-resources
         uses: svenstaro/upload-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: scripts/DeepPhe-unix-scripts.zip
-          asset_name: DeepPhe-unix-scripts.zip
+          file: zips/DeepPhe-resources.zip
+          asset_name: DeepPhe-resources.zip
           tag: 'refs/heads/main'
           overwrite: true
           
       - name: Upload Release Asset
-        id: upload-win-scripts
+        id: upload-lib
         uses: svenstaro/upload-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: scripts/DeepPhe-win-scripts.zip
-          asset_name: DeepPhe-win-scripts.zip
+          file: zips/DeepPhe-lib.zip
+          asset_name: DeepPhe-lib.zip
           tag: 'refs/heads/main'
           overwrite: true
-
-
+          
       - name: Upload Release Asset
-        id: upload-neo4j-conf
+        id: upload-bin
         uses: svenstaro/upload-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: scripts/DeepPhe-neo4j-conf.zip
-          asset_name: DeepPhe-neo4j-conf.zip
+          file: zips/DeepPhe-bin.zip
+          asset_name: DeepPhe-bin.zip
+          tag: 'refs/heads/main'
+          overwrite: true
+          
+      - name: Upload Release Asset
+        id: upload-neo4j
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: zips/DeepPhe-neo4j.zip
+          asset_name: DeepPhe-neo4j.zip
           tag: 'refs/heads/main'
           overwrite: true
 
+     
