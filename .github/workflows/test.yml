@@ -38,10 +38,10 @@ jobs:
       - name: Build with Maven
         run: |
           cd DeepPhe
-          ls -la
           cd dphe-onto-db
+          (mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
           echo "{dphe_onto_db_version}={$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)}" >> $GITHUB_ENV
-          echo "${{ env.dphe_onto_db_version }}" 
+          echo "The version is ${{ env.dphe_onto_db_version }}" 
 
           
           
