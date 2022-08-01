@@ -56,9 +56,6 @@ jobs:
           
       - name: Create zips
         id: create_zips
-        run: |
-          echo "The version is ${{ env.dphe_onto_db_version }}" 
-
           
       - uses: vimtor/action-zip@v1
         with:
