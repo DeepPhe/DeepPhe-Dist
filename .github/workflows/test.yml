@@ -35,6 +35,10 @@ jobs:
           cd dphe-onto-db
           (mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
           echo "dphe_onto_db_version=test" >> $GITHUB_ENV
+
+      - name: Use the value
+        id: step_two
+        run: |
           echo "The version is ${{ env.dphe_onto_db_version }}" 
 
           
