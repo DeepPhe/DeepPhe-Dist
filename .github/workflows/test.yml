@@ -33,14 +33,56 @@ jobs:
         run: |
           cd DeepPhe
           cd dphe-onto-db
-          (mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-neo4j
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-neo4j-plugin
+          echo "dphe_neo4j_plugin_version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-core
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-stream
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          cd dphe-cli
+          echo "dphe_cli_version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
+          mvn --batch-mode clean install -U -DskipTests
+          cd ..
+          mkdir zips
+        
           echo "dphe_onto_db_version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
 
-      - name: Use the value
-        id: step_two
+      - name: Create zips
+        id: create_zips
         run: |
           echo "The version is ${{ env.dphe_onto_db_version }}" 
 
           
+      - uses: vimtor/action-zip@v1
+        with:
+          files: DeepPhe/dphe-cli/target/deepphe-${{ env.dphe_cli_version }}-bin/deepphe-${{ env.dphe_cli_version }}/bin/ 
+          dest: zips/DeepPhe-bin.zip
+          recursive: true
+
+      - uses: vimtor/action-zip@v1   
+        with:
+          files: DeepPhe/dphe-cli/target/deepphe-${{ env.dphe_cli_version }}-bin/deepphe-${{ env.dphe_cli_version }}/lib/ 
+          dest: zips/DeepPhe-lib.zip
+          recursive: true
           
+      - uses: vimtor/action-zip@v1   
+        with:
+          files: DeepPhe/dphe-cli/target/deepphe-${{ env.dphe_cli_version }}-bin/deepphe-${{ env.dphe_cli_version }}/resources/ 
+          dest: zips/DeepPhe-resources.zip
+          recursive: true
+        
+      - uses: vimtor/action-zip@v1   
+        with:
+          files: DeepPhe/dphe-neo4j-plugin/target/deepphe-neo4j-plugin-${{ env.dphe_neo4j_plugin_version }}.jar 
+          dest: zips/DeepPhe-neo4j.zip
+          recursive: true
       
