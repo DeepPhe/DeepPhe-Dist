@@ -27,11 +27,11 @@ jobs:
           repository: DeepPhe/DeepPhe-startup-scripts
           ref: 'main'
           path: 'scripts'
-
-      - uses: actions/setup-java@v2
+     
+      - uses: vimtor/action-zip@v1
         with:
-          java-version: '8'
-          distribution: 'adopt'
+          files: scripts/piper-files
+          dest: scripts/DeepPhe-piper-files.zip
   
       - uses: vimtor/action-zip@v1
         with:
@@ -47,7 +47,19 @@ jobs:
         with:
           files: scripts/DeepPhe-neo4j-conf
           dest: scripts/DeepPhe-neo4j-conf.zip
- 
+      
+      - name: Upload Release Asset
+        id: upload-piper-files
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: scripts/DeepPhe-piper-files.zip
+          asset_name: DeepPhe-piper-files.zip
+          tag: 'refs/heads/main'
+          overwrite: true
+          
       - name: Upload Release Asset
         id: upload-unix-scripts
         uses: svenstaro/upload-release-action@v2
