@@ -34,7 +34,7 @@ jobs:
 
       - uses: vimtor/action-zip@v1
         with:
-          files: viz/api/ viz/client/
+          files: viz
           dest: zips/DeepPhe-Viz.zip
           recursive: false
       
