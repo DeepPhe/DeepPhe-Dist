@@ -23,8 +23,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: DeepPhe/DeepPhe-Viz
-          ref: ${{ steps.keydb.outputs.release }}
+          ref: ${{ steps.viz-release.outputs.release }}
           path: 'viz'
+      
+      - name: Latest Viz Release
+        run: echo "Latest Viz release determined to be: ${{ steps.viz-release.outputs.release }}."
      
       - uses: vimtor/action-zip@v1
         with:
