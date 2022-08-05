@@ -32,7 +32,7 @@ jobs:
           ref: ${{ steps.viz-release.outputs.release }}
           path: 'DeepPhe-Viz'
 
-      - name: Report Release
+      - name: Zip Release
         run: |
           cd DeepPhe-Viz
           zip -r -X DeepPhe-Viz api/ client/
