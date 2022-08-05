@@ -36,7 +36,7 @@ jobs:
         with:
           files: viz/api/ viz/client/
           dest: zips/DeepPhe-Viz.zip
-          recursive: true
+          recursive: false
       
       - name: Upload Release Asset
         id: upload-viz
