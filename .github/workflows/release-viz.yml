@@ -18,6 +18,12 @@ jobs:
           owner: DeepPhe
           repo: DeepPhe-Viz
           excludes: prerelease, draft
+    
+      - name: Latest Viz Release
+        run: echo "viz_version=${{ steps.viz-release.outputs.release }}" >> $GITHUB_ENV
+        
+      - name: Report Release
+        run: echo 'Latest Visuzlizer release is ${{ env.viz_version }}'
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -26,8 +32,8 @@ jobs:
           ref: ${{ steps.viz-release.outputs.release }}
           path: 'viz'
       
-      - name: Latest Viz Release
-        run: echo "Latest Viz release determined to be: ${{ steps.viz-release.outputs.release }}."
+     
+     
      
       - uses: vimtor/action-zip@v1
         with:
