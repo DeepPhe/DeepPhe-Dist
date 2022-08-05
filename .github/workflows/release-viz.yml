@@ -1,0 +1,45 @@
+name: Create DeepPhe-Viz Zip
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build with Maven
+        run: mkdir zips
+        
+      - id: viz-release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: DeepPhe
+          repo: DeepPhe-Viz
+          excludes: prerelease, draft
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: DeepPhe/DeepPhe-Viz
+          ref: ${{ steps.keydb.outputs.release }}
+          path: 'viz'
+     
+      - uses: vimtor/action-zip@v1
+        with:
+          files: viz/api, viz/client
+          dest: zips/DeepPhe-Viz.zip
+      
+      - name: Upload Release Asset
+        id: upload-viz
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: zips/DeepPhe-Viz.zip
+          asset_name: DeepPhe-Viz.zip
+          tag: 'refs/heads/main'
+          overwrite: true
+          
