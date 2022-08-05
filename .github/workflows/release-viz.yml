@@ -31,13 +31,10 @@ jobs:
           repository: DeepPhe/DeepPhe-Viz
           ref: ${{ steps.viz-release.outputs.release }}
           path: 'viz'
-      
-     
-     
-     
+
       - uses: vimtor/action-zip@v1
         with:
-          files: viz/api, viz/client
+          files: viz/api/ viz/client/
           dest: zips/DeepPhe-Viz.zip
       
       - name: Upload Release Asset
