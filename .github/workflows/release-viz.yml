@@ -46,7 +46,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: DeepPhe-Viz.zip
-          asset_name: DeepPhe-Viz.zip
+          asset_name: DeepPhe-Viz/DeepPhe-Viz.zip
           tag: 'refs/heads/main'
           overwrite: true
           
