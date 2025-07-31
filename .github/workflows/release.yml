@@ -38,7 +38,7 @@ jobs:
           cd dphe-neo4j
           mvn --batch-mode clean install -U -DskipTests
           cd ..
-          cd dphe-nlp
+          cd dphe-nlp2
           echo "dphe_nlp_version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
           mvn --batch-mode clean install -U -DskipTests
           cd ..
