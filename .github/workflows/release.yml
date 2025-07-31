@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: DeepPhe/DeepPhe-Release
-          ref: 'xn0.6.5'
+          ref: 'xn0.7.0'
           path: 'DeepPhe'
 
       - uses: actions/setup-java@v2
@@ -32,24 +32,14 @@ jobs:
       - name: Build with Maven
         run: |
           cd DeepPhe
-          cd dphe-onto-db
+          cd dphe-onto-db2
           mvn --batch-mode clean install -U -DskipTests
           cd ..
           cd dphe-neo4j
           mvn --batch-mode clean install -U -DskipTests
           cd ..
-          cd dphe-neo4j-plugin
-          echo "dphe_neo4j_plugin_version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-core
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-stream
-          mvn --batch-mode clean install -U -DskipTests
-          cd ..
-          cd dphe-cli
-          echo "dphe_cli_version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
+          cd dphe-nlp
+          echo "dphe_nlp_version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
           mvn --batch-mode clean install -U -DskipTests
           cd ..
           mkdir zips
@@ -60,28 +50,22 @@ jobs:
           
       - uses: vimtor/action-zip@v1
         with:
-          files: DeepPhe/dphe-cli/target/deepphe-${{ env.dphe_cli_version }}-bin/deepphe-${{ env.dphe_cli_version }}/bin/ 
+          files: DeepPhe/dphe-nlp/target/deepphe-${{ env.dphe_nlp_version }}-bin/deepphe-${{ env.dphe_nlp_version }}/bin/ 
           dest: zips/DeepPhe-bin.zip
           recursive: true
 
       - uses: vimtor/action-zip@v1   
         with:
-          files: DeepPhe/dphe-cli/target/deepphe-${{ env.dphe_cli_version }}-bin/deepphe-${{ env.dphe_cli_version }}/lib/ 
+          files: DeepPhe/dphe-nlp/target/deepphe-${{ env.dphe_nlp_version }}-bin/deepphe-${{ env.dphe_nlp_version }}/lib/ 
           dest: zips/DeepPhe-lib.zip
           recursive: true
           
       - uses: vimtor/action-zip@v1   
         with:
-          files: DeepPhe/dphe-cli/target/deepphe-${{ env.dphe_cli_version }}-bin/deepphe-${{ env.dphe_cli_version }}/resources/ 
+          files: DeepPhe/dphe-nlp/target/deepphe-${{ env.dphe_nlp_version }}-bin/deepphe-${{ env.dphe_nlp_version }}/resources/ 
           dest: zips/DeepPhe-resources.zip
           recursive: true
-        
-      - uses: vimtor/action-zip@v1   
-        with:
-          files: DeepPhe/dphe-neo4j-plugin/target/deepphe-neo4j-plugin-${{ env.dphe_neo4j_plugin_version }}.jar 
-          dest: zips/DeepPhe-neo4j.zip
-          recursive: true
-          
+                  
       - name: Upload Release Asset
         id: upload-resources
         uses: svenstaro/upload-release-action@v2
@@ -118,16 +102,4 @@ jobs:
           tag: 'refs/heads/main'
           overwrite: true
           
-      - name: Upload Release Asset
-        id: upload-neo4j
-        uses: svenstaro/upload-release-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: zips/DeepPhe-neo4j.zip
-          asset_name: DeepPhe-neo4j.zip
-          tag: 'refs/heads/main'
-          overwrite: true
-
      
