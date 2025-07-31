@@ -16,7 +16,7 @@ jobs:
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           owner: DeepPhe
-          repo: DeepPhe-Viz
+          repo: DeepPhe-Viz-v2
           excludes: prerelease, draft
     
       - name: Latest Viz Release
@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: DeepPhe/DeepPhe-Viz
+          repository: DeepPhe/DeepPhe-Viz-v2
           ref: ${{ steps.viz-release.outputs.release }}
           path: 'DeepPhe-Viz'
 
