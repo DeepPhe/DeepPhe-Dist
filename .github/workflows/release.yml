@@ -56,7 +56,7 @@ jobs:
 
       - uses: vimtor/action-zip@v1   
         with:
-          files: DeepPhe/dphe-nlp2/target/deepphe-${{ env.dphe_nlp_version }}-bin/deepphe-${{ env.dphe_nlp_version }}/lib/ 
+          files: DeepPhe/dphe-nlp2/target/deepphe-${{ env.dphe_nlp_version }}-bin/deepphe-${{ env.dphe_nlp_version }}/lib/ DeepPhe/dphe-nlp2/target/deepphe-nlp.jar 
           dest: zips/DeepPhe-lib.zip
           recursive: true
           
